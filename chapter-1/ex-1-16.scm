@@ -1,0 +1,22 @@
+(define (even? n)
+  (= (remainder n 2) 0))
+
+(define (iter-fast-exp b n state)
+  (cond ((= n 0) 1)
+        ((= n 1) (* b state))
+        ((> n 1)
+         (if (even? n)
+              (iter-fast-exp (* b b) (/ n 2) state)
+              (iter-fast-exp b (- n 1) (* state b))
+         ))
+         )
+  )
+
+(define (iter-exp b n)
+  (iter-fast-exp b n 1))
+
+(= (iter-exp 2 5) 32)
+(= (iter-exp 2 6) 64)
+(= (iter-exp 1 1) 1)
+(= (iter-exp 5 0) 1)
+(= (iter-exp 5 3) 125)
